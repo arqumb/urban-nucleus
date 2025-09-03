@@ -2,7 +2,7 @@ const mysql = require('mysql2/promise');
 
 async function updateInventory() {
     const pool = mysql.createPool({
-        host: 'localhost',
+        host: '31.97.239.99',
         user: 'urban_user',
         password: '@Arqum789',
         database: 'urban_nucleus'
