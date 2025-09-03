@@ -2,7 +2,7 @@ const mysql = require('mysql2');
 
 const pool = mysql.createPool({
   host: 'localhost',
-  user: 'root',
+  user: 'urban_user',
   password: '@Arqum789',
   database: 'urban_nucleus',
   port: 3306
@@ -254,7 +254,7 @@ async function setupDatabase() {
     
     console.log('\n🎉 Database setup completed successfully!');
     console.log('All tables created and sample data added.');
-    console.log('You can now use the admin panel at: http://localhost:3000/admin.html');
+    console.log('You can now use the admin panel at: http://31.97.239.99:3000/admin.html');
     console.log('Admin Login: bubere908@gmail.com / @Arqum789');
     
   } catch (error) {

@@ -269,7 +269,7 @@
         
         async function loadOrderDetails(orderId) {
             try {
-                const response = await fetch(`http://localhost:3000/orders/${orderId}`);
+                const response = await fetch(`http://31.97.239.99:3000/orders/${orderId}`);
                 if (!response.ok) {
                     throw new Error('Failed to fetch order details');
                 }

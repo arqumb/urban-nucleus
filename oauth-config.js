@@ -6,7 +6,7 @@ const OAUTH_CONFIG = {
     GOOGLE: {
         CLIENT_ID: '1009074923316-qf8mb0viffso7mel9v7st5eso4tbnse9.apps.googleusercontent.com', // Get this from Google Cloud Console
         CLIENT_SECRET: 'YOUR_GOOGLE_CLIENT_SECRET', // Get this from Google Cloud Console
-        REDIRECT_URI: 'http://localhost:5500/login.html', // Your redirect URI (HTTP works for Google)
+        REDIRECT_URI: 'http://31.97.239.99/login.html', // VPS redirect URI
         SCOPES: ['email', 'profile']
     },
     
@@ -37,8 +37,8 @@ GOOGLE OAUTH SETUP: ✅ COMPLETED
 4. Go to Credentials > Create Credentials > OAuth 2.0 Client IDs
 5. Set Application Type to "Web application"
 6. Add authorized redirect URIs:
-   - http://localhost:5500/login.html
-   - http://localhost:5500/signup.html
+   - http://31.97.239.99/login.html
+   - http://31.97.239.99/signup.html
 7. Copy the Client ID and Client Secret
 8. ✅ Client ID configured: 1009074923316-qf8mb0viffso7mel9v7st5eso4tbnse9.apps.googleusercontent.com
 

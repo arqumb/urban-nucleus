@@ -5,7 +5,7 @@ const mysql = require('mysql2');
 const connection = mysql.createConnection({
   host: 'centerbeam.proxy.rlwy.net',
   port: 32551,
-  user: 'root',
+  user: 'urban_user',
   password: 'hYxDnEvRNmmxfMxsrUyrrqcshk1fCsxg',
   database: 'railway'
 });
@@ -111,3 +111,4 @@ INSERT IGNORE INTO products (id, name, description, price, compare_at_price, ima
     connection.end();
   });
 }
+

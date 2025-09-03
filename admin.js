@@ -1,5 +1,5 @@
 // Admin Dashboard JavaScript
-const API_BASE_URL = 'https://rosybrown-ram-255793.hostingersite.com';
+const API_BASE_URL = 'http://31.97.239.99:3000';
 let currentSection = 'dashboard';
 let currentProductId = null;
 
@@ -1406,7 +1406,7 @@ function loadOrders() {
     
     window.isLoadingOrders = true;
     
-    const API_BASE_URL = 'https://rosybrown-ram-255793.hostingersite.com';
+    const API_BASE_URL = 'http://31.97.239.99:3000';
     const url = `${API_BASE_URL}/admin/orders`;
     
     showOrdersLoading();
@@ -3902,11 +3902,11 @@ function viewCustomerDetails(customerId) {
         // Fallback to enhanced implementation
         console.log('🔍 Opening customer details for ID:', customerId);
         
-        fetch(`https://rosybrown-ram-255793.hostingersite.com/users/${customerId}`)
+        fetch(`http://31.97.239.99:3000/users/${customerId}`)
             .then(response => response.json())
             .then(customer => {
                 // Fetch orders
-                return fetch(`https://rosybrown-ram-255793.hostingersite.com/users/${customerId}/orders`)
+                return fetch(`http://31.97.239.99:3000/users/${customerId}/orders`)
                     .then(ordersResponse => ordersResponse.ok ? ordersResponse.json() : [])
                     .then(orders => ({ customer, orders }));
             })

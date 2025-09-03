@@ -3,7 +3,7 @@ const mysql = require('mysql2');
 // Database configuration
 const dbConfig = {
     host: 'localhost',
-    user: 'root',
+    user: 'urban_user',
     password: '@Arqum789',
     database: 'urban_nucleus'
 };

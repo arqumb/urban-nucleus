@@ -1144,7 +1144,7 @@
         // Announcement Bar Functions
         async function loadAnnouncementBarData() {
             try {
-                const response = await fetch('http://localhost:3000/api/announcement');
+                const response = await fetch('http://31.97.239.99:3000/api/announcement');
                 if (response.ok) {
                     const data = await response.json();
                     if (data.visible && data.messages && data.messages.length > 0) {
@@ -2164,7 +2164,7 @@
                 console.log('💳 Initiating Razorpay payment...');
                 
                 // Create order in backend first
-                const orderResponse = await fetch('http://localhost:3000/payment/create-order', {
+                const orderResponse = await fetch('http://31.97.239.99:3000/payment/create-order', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -2273,7 +2273,7 @@
                 };
                 
                 // Create order in database
-                const orderResponse = await fetch('http://localhost:3000/orders', {
+                const orderResponse = await fetch('http://31.97.239.99:3000/orders', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -2290,7 +2290,7 @@
                 console.log('✅ Order created in database:', orderResult);
                 
                 // Verify payment with backend
-                const verifyResponse = await fetch('http://localhost:3000/payment/verify', {
+                const verifyResponse = await fetch('http://31.97.239.99:3000/payment/verify', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -2375,7 +2375,7 @@
                 console.log('📤 Sending COD order to backend:', orderData);
                 
                 // Call backend API
-                const response = await fetch('http://localhost:3000/orders', {
+                const response = await fetch('http://31.97.239.99:3000/orders', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

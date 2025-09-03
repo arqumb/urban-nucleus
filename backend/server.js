@@ -45,7 +45,7 @@ app.use((req, res, next) => {
 });
 
 // Serve static files from the parent directory
-app.use(express.static('../'));
+app.use(express.static('/var/www/urban-nucleus/'));
 
 // Serve uploads directory specifically
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
@@ -65,7 +65,7 @@ app.get('/health', (req, res) => {
 // Database connection with environment variables
 const pool = mysql.createPool({
   host: process.env.MYSQL_HOST || 'localhost',
-  user: process.env.MYSQL_USER || 'root',
+  user: process.env.MYSQL_USER || 'urban_user',
   password: process.env.MYSQL_PASSWORD || '@Arqum789',
   database: process.env.MYSQL_DATABASE || 'urban_nucleus',
   port: process.env.MYSQL_PORT || 3306,
@@ -88,6 +88,8 @@ pool.getConnection((err, connection) => {
 });
 
 // Database migration for social login fields
+// Migrations disabled - tables created by FINAL_COMPLETE_DATABASE_SETUP.sql
+/* 
 pool.getConnection((err, connection) => {
   if (err) {
     console.error('Error connecting to database:', err);
@@ -113,8 +115,10 @@ pool.getConnection((err, connection) => {
   
   connection.release();
 });
+*/
 
-// Database migration for category description fields
+// Database migration for category description fields - DISABLED
+/* 
 pool.getConnection((err, connection) => {
   if (err) {
     console.error('Error connecting to database:', err);
@@ -137,8 +141,10 @@ pool.getConnection((err, connection) => {
   
   connection.release();
 });
+*/
 
-// Database migration for products table category fields
+// Database migration for products table category fields - DISABLED
+/* 
 pool.getConnection((err, connection) => {
   if (err) {
     console.error('Error connecting to database:', err);
@@ -174,6 +180,7 @@ pool.getConnection((err, connection) => {
   
   connection.release();
 });
+*/
 
 // Email configuration - Use imported config
 const transporter = nodemailer.createTransport(emailConfig.gmail);
@@ -234,7 +241,7 @@ app.post('/products/:id/upload-images', upload.array('images', 10), (req, res) =
   if (!files || files.length === 0) return res.status(400).json({ error: 'No files uploaded' });
   
   // Create full URLs for the images
-  const baseUrl = `http://localhost:${PORT}`;
+  const baseUrl = `http://31.97.239.99:${PORT}`;
   const imageValues = files.map((file, idx) => [
     productId, 
     `${baseUrl}/uploads/images/${file.filename}`, 
@@ -250,7 +257,7 @@ app.post('/products/:id/upload-images', upload.array('images', 10), (req, res) =
     }
     
     // Then insert new images
-    pool.query('INSERT INTO product_images (product_id, image_url, file_path, position) VALUES ?', [imageValues], (err) => {
+    pool.query('INSERT INTO product_images (product_id, image, file_path, position) VALUES ?', [imageValues], (err) => {
       if (err) {
         console.error('Database error uploading images:', err);
         return res.status(500).json({ error: 'Database error' });
@@ -286,7 +293,7 @@ app.post('/products/:id/upload-videos', upload.array('videos', 5), (req, res) =>
   if (!files || files.length === 0) return res.status(400).json({ error: 'No files uploaded' });
   
   // Create full URLs for the videos
-  const baseUrl = `http://localhost:${PORT}`;
+  const baseUrl = `http://31.97.239.99:${PORT}`;
   const videoValues = files.map((file, idx) => [
     productId, 
     `${baseUrl}/uploads/videos/${file.filename}`, 
@@ -357,7 +364,7 @@ app.get('/products/search', async (req, res) => {
         p.name,
         p.price,
         p.description,
-        p.image_url,
+        p.image,
         p.category_id,
         p.subcategory_id,
         p.status,
@@ -392,7 +399,7 @@ app.get('/products/search', async (req, res) => {
       for (let product of products) {
         try {
           const imageQuery = `
-            SELECT image_url 
+            SELECT image 
             FROM product_images 
             WHERE product_id = ? 
             ORDER BY id ASC 
@@ -491,9 +498,9 @@ app.get('/new-arrivals', (req, res) => {
         ...p,
         images: imagesByProduct[p.id] || [],
         variants: variantsByProduct[p.id] || [],
-        // Set the first image as the main image_url for compatibility
-        image_url: imagesByProduct[p.id] && imagesByProduct[p.id].length > 0 
-          ? imagesByProduct[p.id][0].image_url 
+        // Set the first image as the main image for compatibility
+        image: imagesByProduct[p.id] && imagesByProduct[p.id].length > 0 
+          ? imagesByProduct[p.id][0].image 
           : null
       }));
       
@@ -606,9 +613,9 @@ app.get('/products', (req, res) => {
         images: imagesByProduct[p.id] || [],
         videos: videosByProduct[p.id] || [],
         variants: variantsByProduct[p.id] || [],
-        // Set the first image as the main image_url for compatibility
-        image_url: imagesByProduct[p.id] && imagesByProduct[p.id].length > 0 
-          ? imagesByProduct[p.id][0].image_url 
+        // Set the first image as the main image for compatibility
+        image: imagesByProduct[p.id] && imagesByProduct[p.id].length > 0 
+          ? imagesByProduct[p.id][0].image 
           : null
       }));
       
@@ -752,9 +759,9 @@ app.get('/admin/products', (req, res) => {
             images: imagesByProduct[p.id] || [],
             videos: videosByProduct[p.id] || [],
             variants: variantsByProduct[p.id] || [],
-            // Set the first image as the main image_url for compatibility
-            image_url: imagesByProduct[p.id] && imagesByProduct[p.id].length > 0 
-              ? imagesByProduct[p.id][0].image_url 
+            // Set the first image as the main image for compatibility
+            image: imagesByProduct[p.id] && imagesByProduct[p.id].length > 0 
+              ? imagesByProduct[p.id][0].image 
               : null
           }));
           
@@ -829,7 +836,7 @@ app.get('/products/:id', (req, res) => {
               videos: videos,
               variants: variants,
               sizes: sizes,
-              image_url: images.length > 0 ? images[0].image_url : null
+              image: images.length > 0 ? images[0].image : null
             });
           });
         });
@@ -866,7 +873,7 @@ app.get('/categories', (req, res) => {
     SELECT 
       c.id as category_id,
       c.name as category_name,
-      c.image_url as category_image_url,
+      c.image as category_image,
       s.id as subcategory_id,
       s.name as subcategory_name
     FROM categories c
@@ -885,7 +892,7 @@ app.get('/categories', (req, res) => {
         categories[row.category_id] = {
           id: row.category_id,
           name: row.category_name,
-          image_url: row.category_image_url,
+          image: row.category_image,
           subcategories: []
         };
       }
@@ -907,9 +914,9 @@ app.get('/admin/category-images', (req, res) => {
     SELECT 
       c.id,
       c.name,
-      c.image_url,
+      c.image,
       ci.id as image_id,
-      ci.image_url as category_image_url,
+      ci.image as category_image,
       ci.position
     FROM categories c
     LEFT JOIN category_images ci ON c.id = ci.category_id
@@ -927,14 +934,14 @@ app.get('/admin/category-images', (req, res) => {
         categories[row.id] = {
           id: row.id,
           name: row.name,
-          current_image_url: row.image_url,
+          current_image: row.image,
           images: []
         };
       }
       if (row.image_id) {
         categories[row.id].images.push({
           id: row.image_id,
-          image_url: row.category_image_url,
+          image: row.category_image,
           position: row.position
         });
       }
@@ -954,7 +961,7 @@ app.post('/admin/category-images', upload.single('image'), (req, res) => {
   const imageUrl = `/uploads/images/${req.file.filename}`;
 
   pool.query(
-    'INSERT INTO category_images (category_id, image_url, position) VALUES (?, ?, ?)',
+    'INSERT INTO category_images (category_id, image, position) VALUES (?, ?, ?)',
     [category_id, imageUrl, position],
     (err, result) => {
       if (err) {
@@ -962,13 +969,13 @@ app.post('/admin/category-images', upload.single('image'), (req, res) => {
         return res.status(500).json({ error: 'Database error' });
       }
 
-      // Update the main category image_url if this is the first image
+      // Update the main category image if this is the first image
       pool.query(
-        'UPDATE categories SET image_url = ? WHERE id = ? AND (image_url IS NULL OR image_url = "")',
+        'UPDATE categories SET image = ? WHERE id = ? AND (image IS NULL OR image = "")',
         [imageUrl, category_id],
         (updateErr) => {
           if (updateErr) {
-            console.error('Error updating category image_url:', updateErr);
+            console.error('Error updating category image:', updateErr);
           }
         }
       );
@@ -976,7 +983,7 @@ app.post('/admin/category-images', upload.single('image'), (req, res) => {
       res.json({ 
         success: true, 
         image_id: result.insertId,
-        image_url: imageUrl 
+        image: imageUrl 
       });
     }
   );
@@ -985,11 +992,11 @@ app.post('/admin/category-images', upload.single('image'), (req, res) => {
 // Update category main image
 app.put('/admin/categories/:id/image', (req, res) => {
   const categoryId = req.params.id;
-  const { image_url } = req.body;
+  const { image } = req.body;
 
   pool.query(
-    'UPDATE categories SET image_url = ? WHERE id = ?',
-    [image_url, categoryId],
+    'UPDATE categories SET image = ? WHERE id = ?',
+    [image, categoryId],
     (err, result) => {
       if (err) {
         console.error('Database error:', err);
@@ -997,7 +1004,7 @@ app.put('/admin/categories/:id/image', (req, res) => {
       }
 
       res.json({ success: true, message: 'Category image updated successfully' });
-      console.log(`Category ${categoryId} image updated to: ${image_url}`);
+      console.log(`Category ${categoryId} image updated to: ${image}`);
     }
   );
 });
@@ -1008,7 +1015,7 @@ app.delete('/admin/category-images/:id', (req, res) => {
 
   // First get the image details to check if it's the main category image
   pool.query(
-    'SELECT ci.*, c.image_url as category_main_image FROM category_images ci JOIN categories c ON ci.category_id = c.id WHERE ci.id = ?',
+    'SELECT ci.*, c.image as category_main_image FROM category_images ci JOIN categories c ON ci.category_id = c.id WHERE ci.id = ?',
     [imageId],
     (err, results) => {
       if (err) {
@@ -1021,7 +1028,7 @@ app.delete('/admin/category-images/:id', (req, res) => {
       }
 
       const image = results[0];
-      const isMainImage = image.image_url === image.category_main_image;
+      const isMainImage = image.image === image.category_main_image;
 
       // Delete the image record
       pool.query(
@@ -1036,15 +1043,15 @@ app.delete('/admin/category-images/:id', (req, res) => {
           // If this was the main image, update the category to use another image or clear it
           if (isMainImage) {
             pool.query(
-              'SELECT image_url FROM category_images WHERE category_id = ? ORDER BY position LIMIT 1',
+              'SELECT image FROM category_images WHERE category_id = ? ORDER BY position LIMIT 1',
               [image.category_id],
               (selectErr, remainingImages) => {
                 if (selectErr) {
                   console.error('Error selecting remaining images:', selectErr);
                 } else {
-                  const newMainImage = remainingImages.length > 0 ? remainingImages[0].image_url : null;
+                  const newMainImage = remainingImages.length > 0 ? remainingImages[0].image : null;
                   pool.query(
-                    'UPDATE categories SET image_url = ? WHERE id = ?',
+                    'UPDATE categories SET image = ? WHERE id = ?',
                     [newMainImage, image.category_id],
                     (updateErr) => {
                       if (updateErr) {
@@ -1137,13 +1144,13 @@ app.get('/categories/:categoryId/products', (req, res) => {
       const result = results.map(p => ({
         ...p,
         images: imagesByProduct[p.id] || [],
-        // Set the first image as the main image_url for compatibility
-        image_url: imagesByProduct[p.id] && imagesByProduct[p.id].length > 0 
-          ? imagesByProduct[p.id][0].image_url 
-          : p.image_url
+        // Set the first image as the main image for compatibility
+        image: imagesByProduct[p.id] && imagesByProduct[p.id].length > 0 
+          ? imagesByProduct[p.id][0].image 
+          : p.image
       }));
       
-      console.log('Final result image_urls:', result.map(p => ({ id: p.id, image_url: p.image_url })));
+      console.log('Final result images:', result.map(p => ({ id: p.id, image: p.image })));
       
       res.json(result);
     });
@@ -1778,7 +1785,7 @@ app.get('/cart/:userId', (req, res) => {
   
   pool.query(`
     SELECT c.*, p.name, p.price, 
-           COALESCE(pi.image_url, p.image_url) as image_url
+           COALESCE(pi.image, p.image) as image
     FROM cart c 
     JOIN products p ON c.product_id = p.id 
     LEFT JOIN product_images pi ON p.id = pi.product_id AND pi.position = 1
@@ -2094,12 +2101,12 @@ app.get('/orders/:id', (req, res) => {
     
     // Get order items with proper image handling
     pool.query(`
-      SELECT oi.*, p.name, p.image_url,
-             pi.image_url as product_image_url
+      SELECT oi.*, p.name, p.image,
+             pi.image as product_image
       FROM order_items oi
       LEFT JOIN products p ON oi.product_id = p.id
       LEFT JOIN (
-        SELECT product_id, image_url 
+        SELECT product_id, image 
         FROM product_images pi1 
         WHERE pi1.id = (
           SELECT MIN(pi2.id) 
@@ -2117,13 +2124,13 @@ app.get('/orders/:id', (req, res) => {
       const processedItems = itemResults.map(item => {
         let imageUrl = null;
         
-        // Priority order: product_images table first, then image_url column
-        if (item.product_image_url && item.product_image_url !== 'null' && item.product_image_url !== 'undefined' && item.product_image_url.trim() !== '') {
-          imageUrl = item.product_image_url;
+        // Priority order: product_images table first, then image column
+        if (item.product_image && item.product_image !== 'null' && item.product_image !== 'undefined' && item.product_image.trim() !== '') {
+          imageUrl = item.product_image;
         }
-        // Fallback to image_url column
-        else if (item.image_url && item.image_url !== 'null' && item.image_url !== 'undefined' && item.image_url.trim() !== '') {
-          imageUrl = item.image_url;
+        // Fallback to image column
+        else if (item.image && item.image !== 'null' && item.image !== 'undefined' && item.image.trim() !== '') {
+          imageUrl = item.image;
         }
         // If no valid image found, use placeholder
         else {
@@ -2132,7 +2139,7 @@ app.get('/orders/:id', (req, res) => {
         
         return {
           ...item,
-          image_url: imageUrl
+          image: imageUrl
         };
       });
       
@@ -2164,7 +2171,7 @@ app.get('/wishlist', (req, res) => {
   // Uncomment this when you have a wishlist table:
   /*
   pool.query(`
-    SELECT w.*, p.name, p.price, p.image_url
+    SELECT w.*, p.name, p.price, p.image
     FROM wishlist w
     LEFT JOIN products p ON w.product_id = p.id
     WHERE w.user_id = ?
@@ -2342,7 +2349,7 @@ app.post('/admin/products', (req, res) => {
       // Insert images if provided
       if (Array.isArray(images) && images.length > 0) {
         const imageValues = images.map((url, idx) => [productId, url, null, idx + 1]);
-        pool.query('INSERT INTO product_images (product_id, image_url, file_path, position) VALUES ?', [imageValues], (err) => {
+        pool.query('INSERT INTO product_images (product_id, image, file_path, position) VALUES ?', [imageValues], (err) => {
           if (err) console.error('Error inserting product images:', err);
         });
       }
@@ -2386,7 +2393,7 @@ app.put('/admin/products/:id', (req, res) => {
       pool.query('DELETE FROM product_images WHERE product_id = ?', [productId], (err) => {
         if (!err && Array.isArray(images) && images.length > 0) {
           const imageValues = images.map((url, idx) => [productId, url, null, idx + 1]);
-          pool.query('INSERT INTO product_images (product_id, image_url, file_path, position) VALUES ?', [imageValues], (err) => {
+          pool.query('INSERT INTO product_images (product_id, image, file_path, position) VALUES ?', [imageValues], (err) => {
             if (err) console.error('Error updating product images:', err);
           });
         }
@@ -3298,12 +3305,12 @@ app.get('/limited-drops/:id/products', (req, res) => {
   
       const query = `
       SELECT p.*, ledp.position,
-             GROUP_CONCAT(pi.image_url ORDER BY pi.position ASC SEPARATOR '|') as product_images
+             GROUP_CONCAT(pi.image ORDER BY pi.position ASC SEPARATOR '|') as product_images
       FROM products p
       INNER JOIN limited_edition_drop_products ledp ON p.id = ledp.product_id
       LEFT JOIN product_images pi ON p.id = pi.product_id
       WHERE ledp.drop_id = ?
-      GROUP BY p.id, p.name, p.price, p.compare_at_price, p.image_url, p.description, p.category_id, p.subcategory_id, p.inventory, p.status, p.created_at, ledp.position
+      GROUP BY p.id, p.name, p.price, p.compare_at_price, p.image, p.description, p.category_id, p.subcategory_id, p.inventory, p.status, p.created_at, ledp.position
       ORDER BY ledp.position
     `;
   
@@ -3316,7 +3323,7 @@ app.get('/limited-drops/:id/products', (req, res) => {
     // Process results to include images array
     const processedResults = results.map(row => ({
       ...row,
-      images: row.product_images ? row.product_images.split('|').map(url => ({ image_url: url })) : []
+      images: row.product_images ? row.product_images.split('|').map(url => ({ image: url })) : []
     }));
     
     res.json(processedResults);
@@ -3445,13 +3452,13 @@ app.get('/limited-drops/active/frontend', (req, res) => {
     
     // Then get products for this drop with their images
     const productsQuery = `
-      SELECT p.id, p.name, p.price, p.compare_at_price, p.image_url, ledp.position,
-             GROUP_CONCAT(pi.image_url ORDER BY pi.position ASC SEPARATOR '|') as product_images
+      SELECT p.id, p.name, p.price, p.compare_at_price, p.image, ledp.position,
+             GROUP_CONCAT(pi.image ORDER BY pi.position ASC SEPARATOR '|') as product_images
       FROM limited_edition_drop_products ledp
       INNER JOIN products p ON ledp.product_id = p.id
       LEFT JOIN product_images pi ON p.id = pi.product_id
       WHERE ledp.drop_id = ?
-      GROUP BY p.id, p.name, p.price, p.compare_at_price, p.image_url, ledp.position
+      GROUP BY p.id, p.name, p.price, p.compare_at_price, p.image, ledp.position
       ORDER BY ledp.position ASC
     `;
     
@@ -3466,13 +3473,13 @@ app.get('/limited-drops/active/frontend', (req, res) => {
         name: row.name,
         price: row.price,
         compare_at_price: row.compare_at_price,
-        image_url: row.image_url,
-        images: row.product_images ? row.product_images.split('|').map(url => ({ image_url: url })) : []
+        image: row.image,
+        images: row.product_images ? row.product_images.split('|').map(url => ({ image: url })) : []
       }));
       
       console.log('🔍 Limited Drop API Response:', {
         drop: drop,
-        products: products.map(p => ({ id: p.id, name: p.name, image: p.image_url }))
+        products: products.map(p => ({ id: p.id, name: p.name, image: p.image }))
       });
       
       res.json({
@@ -3671,7 +3678,7 @@ app.post('/admin/hero-slides/upload-media', heroSlideUpload.single('media'), (re
   }
   
   const mediaType = req.body.media_type || 'image';
-  const baseUrl = `http://localhost:${PORT}`;
+  const baseUrl = `http://31.97.239.99:${PORT}`;
   const mediaUrl = `${baseUrl}/uploads/hero-slides/${req.file.filename}`;
   
   console.log('Hero slide media uploaded:', {
@@ -3712,12 +3719,12 @@ app.put('/products/:id/images', (req, res) => {
     // Then insert preserved images
     const imageValues = images.map(img => [
       productId, 
-      img.image_url || img.url || '', 
+      img.image || img.url || '', 
       img.file_path || null, 
       img.position || 1
     ]);
     
-    pool.query('INSERT INTO product_images (product_id, image_url, file_path, position) VALUES ?', [imageValues], (err) => {
+    pool.query('INSERT INTO product_images (product_id, image, file_path, position) VALUES ?', [imageValues], (err) => {
       if (err) {
         console.error('Database error preserving images:', err);
         return res.status(500).json({ error: 'Database error' });
@@ -4359,7 +4366,7 @@ app.get('/setup-database', async (req, res) => {
         description TEXT,
         price DECIMAL(10,2) NOT NULL,
         compare_at_price DECIMAL(10,2) DEFAULT NULL,
-        image_url VARCHAR(500),
+        image VARCHAR(500),
         category_id INT DEFAULT NULL,
         status ENUM('active', 'draft', 'archived') DEFAULT 'active',
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -4373,7 +4380,7 @@ app.get('/setup-database', async (req, res) => {
       (4, 'Bags', 'Luxury bags and accessories'),
       (5, 'Accessories', 'Fashion accessories');
       
-      INSERT IGNORE INTO products (id, name, description, price, compare_at_price, image_url, category_id, status) VALUES
+      INSERT IGNORE INTO products (id, name, description, price, compare_at_price, image, category_id, status) VALUES
       (1, 'AJ 1 Low x Travis Scott Fragment', 'Limited edition collaboration sneaker', 10499.00, 12999.00, 'https://4pfkicks.in/cdn/shop/files/0A88D887-95A5-4EC1-9D8E-BA10369666A7_700x.jpg', 1, 'active'),
       (2, 'AJ 1 Low x Travis Scott Reverse Mocha', 'Exclusive Travis Scott collaboration', 9499.00, 11999.00, 'https://4pfkicks.in/cdn/shop/files/E1D540D9-FE88-44A4-8349-F35DA23E803F_700x.jpg', 1, 'active'),
       (3, 'Yeezy Boost 350v2 Blue Tint', 'Comfortable and stylish Yeezy sneaker', 3999.00, 4999.00, 'https://4pfkicks.in/cdn/shop/files/E6FFA535-8532-44BA-9600-01B78A07E8BE_700x.jpg', 1, 'active'),
@@ -4417,7 +4424,7 @@ app.get('/setup-database', async (req, res) => {
 });
 
 // Start the server
-const DOMAIN_URL = process.env.DOMAIN_URL || `http://localhost:${PORT}`;
+const DOMAIN_URL = process.env.DOMAIN_URL || `http://31.97.239.99:${PORT}`;
 
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 Server running on port ${PORT}`);

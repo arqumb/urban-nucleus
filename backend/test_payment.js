@@ -4,7 +4,7 @@ async function testPaymentEndpoint() {
     try {
         console.log('🧪 Testing payment endpoint...');
         
-        const response = await axios.post('http://localhost:3000/payment/create-order', {
+        const response = await axios.post('http://31.97.239.99:3000/payment/create-order', {
             amount: 3500,
             currency: 'INR',
             receipt: 'test_receipt_123'

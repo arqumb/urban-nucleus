@@ -17,7 +17,7 @@ const PAYMENT_CONFIG = {
         COMPANY: {
             NAME: 'Urban Nucleus',
             DESCRIPTION: 'Premium Fashion & Lifestyle',
-            LOGO: 'https://yourdomain.com/logo.png',  // Optional
+            LOGO: 'http://31.97.239.99/images/urban-nucleus-logo-backup.svg',  // VPS logo
             THEME_COLOR: '#000000'
         }
     }

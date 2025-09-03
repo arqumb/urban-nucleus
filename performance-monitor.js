@@ -11,7 +11,7 @@ const { execSync } = require('child_process');
 
 class PerformanceMonitor {
     constructor() {
-        this.baseUrl = 'http://localhost:3000';
+        this.baseUrl = 'http://31.97.239.99:3000';
         this.reportsDir = './performance-reports';
         this.pages = [
             { name: 'home', url: '' },

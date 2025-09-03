@@ -10,7 +10,7 @@
     <meta http-equiv="Expires" content="0">
     <link rel="icon" type="image/png" href="images/luxury-sneakers.png">
     <!-- Performance optimizations -->
-    <link rel="preconnect" href="http://localhost:3000">
+    <link rel="preconnect" href="http://31.97.239.99:3000">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="dns-prefetch" href="//images.unsplash.com">
     
@@ -4172,7 +4172,7 @@
                     // Try fetch first (modern browsers)
                     if (typeof fetch !== 'undefined') {
                         console.log('🎯 Using fetch API...');
-                        fetch('http://localhost:3000/hero-slides')
+                        fetch('http://31.97.239.99:3000/hero-slides')
                             .then(function(response) {
                                 return response.json();
                             })
@@ -4192,7 +4192,7 @@
                 
                 function tryXMLHttpRequest() {
                     var xhr = new XMLHttpRequest();
-                    xhr.open('GET', 'http://localhost:3000/hero-slides', true);
+                    xhr.open('GET', 'http://31.97.239.99:3000/hero-slides', true);
                     xhr.onreadystatechange = function() {
                         if (xhr.readyState === 4) {
                             if (xhr.status === 200) {
@@ -4250,7 +4250,7 @@
             console.log('DOM ready');
             
             // Simple limited drops loader
-            fetch('http://localhost:3000/limited-drops/active/frontend')
+            fetch('http://31.97.239.99:3000/limited-drops/active/frontend')
                 .then(function(response) { return response.json(); })
                 .then(function(data) {
                     if (data.active && data.drop) {
@@ -4366,7 +4366,7 @@
         function loadCategories() {
             console.log('Loading categories...');
             
-            fetch('http://localhost:3000/categories')
+            fetch('http://31.97.239.99:3000/categories')
                 .then(function(response) { return response.json(); })
                 .then(function(categories) {
                     console.log('Categories loaded:', categories);
@@ -4439,7 +4439,7 @@
         // Announcement Bar Functions
         async function loadAnnouncementBarData() {
             try {
-                const response = await fetch('http://localhost:3000/api/announcement');
+                const response = await fetch('http://31.97.239.99:3000/api/announcement');
                 if (response.ok) {
                     const data = await response.json();
                     if (data.visible && data.messages && data.messages.length > 0) {
@@ -4605,7 +4605,7 @@
             console.log('Loading new arrivals...');
             
             try {
-                const response = await fetch('http://localhost:3000/new-arrivals?limit=15');
+                const response = await fetch('http://31.97.239.99:3000/new-arrivals?limit=15');
                 if (response.ok) {
                     const products = await response.json();
                     console.log('New arrivals loaded:', products.length, 'products');

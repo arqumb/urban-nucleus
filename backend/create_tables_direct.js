@@ -3,7 +3,7 @@ const mysql = require('mysql2');
 // Use the same database connection as server.js
 const pool = mysql.createPool({
   host: 'localhost',
-  user: 'root',
+  user: 'urban_user',
   password: '@Arqum789',
   database: 'urban_nucleus',
   port: 3306,
@@ -110,8 +110,8 @@ async function createTables() {
     console.log('   • Test newsletter subscription on homepage');
     console.log('   • Test contact form on contact page');
     console.log('   • View submissions at:');
-    console.log('     - http://localhost:3000/admin/newsletter-subscribers');
-    console.log('     - http://localhost:3000/admin/contact-submissions');
+    console.log('     - http://31.97.239.99:3000/admin/newsletter-subscribers');
+    console.log('     - http://31.97.239.99:3000/admin/contact-submissions');
     console.log('');
     console.log('📧 All forms will use: urban.nucleus@gmail.com');
 

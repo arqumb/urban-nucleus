@@ -690,7 +690,7 @@
         // Announcement Bar Functions
         async function loadAnnouncementBarData() {
             try {
-                const response = await fetch('http://localhost:3000/api/announcement');
+                const response = await fetch('http://31.97.239.99:3000/api/announcement');
                 if (response.ok) {
                     const data = await response.json();
                     if (data.visible && data.messages && data.messages.length > 0) {
@@ -741,7 +741,7 @@
         function loadCategories() {
             console.log('Loading categories...');
             
-            fetch('http://localhost:3000/categories')
+            fetch('http://31.97.239.99:3000/categories')
                 .then(function(response) { 
                     if (!response.ok) {
                         throw new Error('Failed to fetch categories');
@@ -793,7 +793,7 @@
             loadCategories();
         });
 
-        const API_BASE_URL = 'http://localhost:3000';
+        const API_BASE_URL = 'http://31.97.239.99:3000';
         let currentUser = null;
         let cartItems = [];
 

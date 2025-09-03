@@ -12,7 +12,7 @@ let productVideos = [];
 
 
 // Constants
-const API_BASE_URL = 'http://localhost:3000';
+const API_BASE_URL = 'http://31.97.239.99:3000';
 
 // Initialize the page when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {

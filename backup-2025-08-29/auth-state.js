@@ -64,7 +64,7 @@ async function checkLoginState() {
                     const currentUser = localStorage.getItem('currentUser');
                     if (currentUser) {
                         const user = JSON.parse(currentUser);
-                        const response = await fetch(`http://localhost:3000/cart/${user.id}`);
+                        const response = await fetch(`http://31.97.239.99:3000/cart/${user.id}`);
                         if (response.ok) {
                             const cartItems = await response.json();
                             const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
@@ -116,7 +116,7 @@ async function checkLoginState() {
                 const currentUser = localStorage.getItem('currentUser');
                 if (currentUser) {
                     const user = JSON.parse(currentUser);
-                    const response = await fetch(`http://localhost:3000/cart/${user.id}`);
+                    const response = await fetch(`http://31.97.239.99:3000/cart/${user.id}`);
                     if (response.ok) {
                         const cartItems = await response.json();
                         const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
@@ -222,7 +222,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     const currentUser = localStorage.getItem('currentUser');
                     if (currentUser) {
                         const user = JSON.parse(currentUser);
-                        const response = await fetch(`http://localhost:3000/cart/${user.id}`);
+                        const response = await fetch(`http://31.97.239.99:3000/cart/${user.id}`);
                         if (response.ok) {
                             const cartItems = await response.json();
                             const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);

@@ -14,7 +14,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="images/favicon.svg">
     <meta name="theme-color" content="#f5f5f0">
     <!-- Performance optimizations -->
-    <link rel="preconnect" href="https://rosybrown-ram-255793.hostingersite.com">
+    <link rel="preconnect" href="http://31.97.239.99:3000">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="dns-prefetch" href="//images.unsplash.com">
     
@@ -4577,7 +4577,7 @@
                 if (currentUser) {
                     const user = JSON.parse(currentUser);
                     // Try to get cart from database first
-                    fetch(`https://rosybrown-ram-255793.hostingersite.com/cart/${user.id}`)
+                    fetch(`http://31.97.239.99:3000/cart/${user.id}`)
                         .then(response => response.json())
                         .then(cartItems => {
                             const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
@@ -4698,7 +4698,7 @@
                     // Try fetch first (modern browsers)
                     if (typeof fetch !== 'undefined') {
                         console.log('🎯 Using fetch API...');
-                        fetch('https://rosybrown-ram-255793.hostingersite.com/hero-slides')
+                        fetch('http://31.97.239.99:3000/hero-slides')
                             .then(function(response) {
                                 return response.json();
                             })
@@ -4718,7 +4718,7 @@
                 
                 function tryXMLHttpRequest() {
                     var xhr = new XMLHttpRequest();
-                    xhr.open('GET', 'https://rosybrown-ram-255793.hostingersite.com/hero-slides', true);
+                    xhr.open('GET', 'http://31.97.239.99:3000/hero-slides', true);
                     xhr.onreadystatechange = function() {
                         if (xhr.readyState === 4) {
                             if (xhr.status === 200) {
@@ -5011,7 +5011,7 @@
                 console.log('🔍 Performing search for:', query);
                 
                 try {
-                    const response = await fetch(`https://rosybrown-ram-255793.hostingersite.com/products/search?q=${encodeURIComponent(query)}`);
+                    const response = await fetch(`http://31.97.239.99:3000/products/search?q=${encodeURIComponent(query)}`);
                     if (!response.ok) {
                         throw new Error(`HTTP error! status: ${response.status}`);
                     }
@@ -5130,7 +5130,7 @@
             submitBtn.disabled = true;
             
             try {
-                const response = await fetch('https://rosybrown-ram-255793.hostingersite.com/newsletter/subscribe', {
+                const response = await fetch('http://31.97.239.99:3000/newsletter/subscribe', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -5180,7 +5180,7 @@
             console.log('DOM ready');
             
             // Simple limited drops loader
-            fetch('https://rosybrown-ram-255793.hostingersite.com/limited-drops/active/frontend')
+            fetch('http://31.97.239.99:3000/limited-drops/active/frontend')
                 .then(function(response) { return response.json(); })
                 .then(function(data) {
                     if (data.active && data.drop) {
@@ -5296,7 +5296,7 @@
         function loadCategories() {
             console.log('Loading categories...');
             
-            fetch('https://rosybrown-ram-255793.hostingersite.com/categories')
+            fetch('http://31.97.239.99:3000/categories')
                 .then(function(response) { 
                     if (!response.ok) {
                         throw new Error('Failed to fetch categories');
@@ -5374,7 +5374,7 @@
         // Announcement Bar Functions
         async function loadAnnouncementBarData() {
             try {
-                const response = await fetch('https://rosybrown-ram-255793.hostingersite.com/api/announcement');
+                const response = await fetch('http://31.97.239.99:3000/api/announcement');
                 if (response.ok) {
                     const data = await response.json();
                     if (data.visible && data.messages && data.messages.length > 0) {
@@ -5540,7 +5540,7 @@
             console.log('Loading new arrivals...');
             
             try {
-                const response = await fetch('https://rosybrown-ram-255793.hostingersite.com/new-arrivals?limit=15');
+                const response = await fetch('http://31.97.239.99:3000/new-arrivals?limit=15');
                 if (response.ok) {
                     const products = await response.json();
                     console.log('New arrivals loaded:', products.length, 'products');

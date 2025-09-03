@@ -30,3 +30,4 @@ EMAIL_PASSWORD=your_email_password
 # Security (Generate strong secrets)
 JWT_SECRET=your_jwt_secret_key_here
 SESSION_SECRET=your_session_secret_here
+

@@ -130,7 +130,7 @@ function createOptimizedHTML() {
     <!-- Preload critical resources -->
     <link rel="preload" href="combined.min.css" as="style">
     <link rel="preload" href="combined.min.js" as="script">
-    <link rel="preconnect" href="http://localhost:3000">
+    <link rel="preconnect" href="http://31.97.239.99:3000">
     <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">`;
             
             content = content.replace(

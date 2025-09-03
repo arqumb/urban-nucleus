@@ -1,5 +1,5 @@
 // API Base URL
-const API_BASE_URL = 'http://localhost:3000';
+const API_BASE_URL = 'http://31.97.239.99:3000';
 
 // Make functions globally accessible for debugging
 window.viewCategory = function(categoryId) {

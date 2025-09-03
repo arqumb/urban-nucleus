@@ -349,7 +349,7 @@
             submitBtn.disabled = true;
             
             try {
-                const response = await fetch('http://localhost:3000/auth/login', {
+                const response = await fetch('http://31.97.239.99:3000/auth/login', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -402,7 +402,7 @@
         function handleGoogleSignIn(response) {
             showMessage('Authenticating with Google...', 'info');
             
-            fetch('http://localhost:3000/auth/google', {
+            fetch('http://31.97.239.99:3000/auth/google', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -456,7 +456,7 @@
                 if (response.authResponse) {
                     showMessage('Authenticating with Facebook...', 'info');
                     
-                    fetch('http://localhost:3000/auth/facebook', {
+                    fetch('http://31.97.239.99:3000/auth/facebook', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -551,7 +551,7 @@
         function loadCategories() {
             console.log('Loading categories...');
             
-            fetch('http://localhost:3000/categories')
+            fetch('http://31.97.239.99:3000/categories')
                 .then(function(response) { return response.json(); })
                 .then(function(categories) {
                     console.log('Categories loaded:', categories);
