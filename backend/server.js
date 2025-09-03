@@ -364,7 +364,7 @@ app.get('/products/search', async (req, res) => {
         p.name,
         p.price,
         p.description,
-        p.image,
+        p.image_url,
         p.category_id,
         p.subcategory_id,
         p.status,
@@ -1147,10 +1147,10 @@ app.get('/categories/:categoryId/products', (req, res) => {
         // Set the first image as the main image for compatibility
         image: imagesByProduct[p.id] && imagesByProduct[p.id].length > 0 
           ? imagesByProduct[p.id][0].image 
-          : p.image
+          : p.image_url
       }));
       
-      console.log('Final result images:', result.map(p => ({ id: p.id, image: p.image })));
+      console.log('Final result images:', result.map(p => ({ id: p.id, image: p.image_url })));
       
       res.json(result);
     });
@@ -1785,7 +1785,7 @@ app.get('/cart/:userId', (req, res) => {
   
   pool.query(`
     SELECT c.*, p.name, p.price, 
-           COALESCE(pi.image, p.image) as image
+           COALESCE(pi.image_url, p.image_url) as image
     FROM cart c 
     JOIN products p ON c.product_id = p.id 
     LEFT JOIN product_images pi ON p.id = pi.product_id AND pi.position = 1
@@ -2101,8 +2101,8 @@ app.get('/orders/:id', (req, res) => {
     
     // Get order items with proper image handling
     pool.query(`
-      SELECT oi.*, p.name, p.image,
-             pi.image as product_image
+      SELECT oi.*, p.name, p.image_url,
+             pi.image_url as product_image
       FROM order_items oi
       LEFT JOIN products p ON oi.product_id = p.id
       LEFT JOIN (
@@ -2171,7 +2171,7 @@ app.get('/wishlist', (req, res) => {
   // Uncomment this when you have a wishlist table:
   /*
   pool.query(`
-    SELECT w.*, p.name, p.price, p.image
+    SELECT w.*, p.name, p.price, p.image_url
     FROM wishlist w
     LEFT JOIN products p ON w.product_id = p.id
     WHERE w.user_id = ?
@@ -3305,12 +3305,12 @@ app.get('/limited-drops/:id/products', (req, res) => {
   
       const query = `
       SELECT p.*, ledp.position,
-             GROUP_CONCAT(pi.image ORDER BY pi.position ASC SEPARATOR '|') as product_images
+             GROUP_CONCAT(pi.image_url ORDER BY pi.position ASC SEPARATOR '|') as product_images
       FROM products p
       INNER JOIN limited_edition_drop_products ledp ON p.id = ledp.product_id
       LEFT JOIN product_images pi ON p.id = pi.product_id
       WHERE ledp.drop_id = ?
-      GROUP BY p.id, p.name, p.price, p.compare_at_price, p.image, p.description, p.category_id, p.subcategory_id, p.inventory, p.status, p.created_at, ledp.position
+      GROUP BY p.id, p.name, p.price, p.compare_at_price, p.image_url, p.description, p.category_id, p.subcategory_id, p.inventory, p.status, p.created_at, ledp.position
       ORDER BY ledp.position
     `;
   
@@ -3452,13 +3452,13 @@ app.get('/limited-drops/active/frontend', (req, res) => {
     
     // Then get products for this drop with their images
     const productsQuery = `
-      SELECT p.id, p.name, p.price, p.compare_at_price, p.image, ledp.position,
-             GROUP_CONCAT(pi.image ORDER BY pi.position ASC SEPARATOR '|') as product_images
+      SELECT p.id, p.name, p.price, p.compare_at_price, p.image_url, ledp.position,
+             GROUP_CONCAT(pi.image_url ORDER BY pi.position ASC SEPARATOR '|') as product_images
       FROM limited_edition_drop_products ledp
       INNER JOIN products p ON ledp.product_id = p.id
       LEFT JOIN product_images pi ON p.id = pi.product_id
       WHERE ledp.drop_id = ?
-      GROUP BY p.id, p.name, p.price, p.compare_at_price, p.image, ledp.position
+      GROUP BY p.id, p.name, p.price, p.compare_at_price, p.image_url, ledp.position
       ORDER BY ledp.position ASC
     `;
     
@@ -3479,7 +3479,7 @@ app.get('/limited-drops/active/frontend', (req, res) => {
       
       console.log('🔍 Limited Drop API Response:', {
         drop: drop,
-        products: products.map(p => ({ id: p.id, name: p.name, image: p.image }))
+        products: products.map(p => ({ id: p.id, name: p.name, image: p.image_url }))
       });
       
       res.json({
