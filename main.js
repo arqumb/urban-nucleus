@@ -153,7 +153,7 @@ function openQuickView(productId) {
     modal.style.display = 'block';
     
     // Fetch product details
-    fetch(`http://31.97.239.99:3000/api/products/${productId}`)
+    fetch(`http://31.97.239.99/api/products/${productId}`)
         .then(response => response.json())
         .then(product => {
             modalContent.innerHTML = `
@@ -194,7 +194,7 @@ function addToCart(productId, button) {
     button.disabled = true;
     
     // Get product details
-    fetch(`http://31.97.239.99:3000/api/products/${productId}`)
+    fetch(`http://31.97.239.99/api/products/${productId}`)
         .then(response => response.json())
         .then(product => {
             // Add to cart logic (integrate with your cart system)
@@ -252,7 +252,7 @@ async function updateCartCount() {
         const userId = user.id;
 
         // Fetch cart count from database
-        const response = await fetch(`http://31.97.239.99:3000/cart/${userId}`);
+        const response = await fetch(`http://31.97.239.99/cart/${userId}`);
         if (response.ok) {
             const cartItems = await response.json();
             const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
@@ -308,7 +308,7 @@ function toggleWishlist(productId, button) {
 
 // ==================== BUY NOW FUNCTIONALITY ====================
 function buyNow(productId) {
-    fetch(`http://31.97.239.99:3000/api/products/${productId}`)
+    fetch(`http://31.97.239.99/api/products/${productId}`)
         .then(response => response.json())
         .then(product => {
             const productData = {

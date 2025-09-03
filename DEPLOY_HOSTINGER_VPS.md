@@ -184,7 +184,7 @@ server {
     
     # API routes
     location /api/ {
-        proxy_pass http://localhost:3000;
+        proxy_pass http://31.97.239.99;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection 'upgrade';
@@ -204,7 +204,7 @@ server {
     
     # Node.js fallback
     location @nodejs {
-        proxy_pass http://localhost:3000;
+        proxy_pass http://31.97.239.99;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection 'upgrade';

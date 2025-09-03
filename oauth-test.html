@@ -145,7 +145,7 @@
             statusDiv.className = 'status info';
             
             try {
-                const response = await fetch('http://31.97.239.99:3000/health');
+                const response = await fetch('http://31.97.239.99/health');
                 if (response.ok) {
                     const data = await response.json();
                     statusDiv.textContent = `✅ Backend connected! Status: ${data.status}, Database: ${data.database}`;
@@ -265,7 +265,7 @@
             statusDiv.className = 'status success';
             
             // Test the backend endpoint
-            fetch('http://31.97.239.99:3000/auth/google', {
+            fetch('http://31.97.239.99/auth/google', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

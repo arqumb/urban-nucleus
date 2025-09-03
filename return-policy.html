@@ -840,7 +840,7 @@
         // Announcement Bar Functions
         async function loadAnnouncementBarData() {
             try {
-                const response = await fetch('http://31.97.239.99:3000/api/announcement');
+                const response = await fetch('http://31.97.239.99/api/announcement');
                 if (response.ok) {
                     const data = await response.json();
                     if (data.visible && data.messages && data.messages.length > 0) {
@@ -934,7 +934,7 @@
                 const currentUser = localStorage.getItem('currentUser');
                 if (currentUser) {
                     const user = JSON.parse(currentUser);
-                    fetch(`http://31.97.239.99:3000/cart/${user.id}`)
+                    fetch(`http://31.97.239.99/cart/${user.id}`)
                         .then(response => response.json())
                         .then(cartItems => {
                             const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);

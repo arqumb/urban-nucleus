@@ -1,7 +1,7 @@
 // Subcategory Page JavaScript
 
 // Global constants
-const API_BASE_URL = 'http://31.97.239.99:3000';
+const API_BASE_URL = 'http://31.97.239.99';
 
 document.addEventListener('DOMContentLoaded', function() {
     // Get subcategory ID and name from URL parameters

@@ -8,7 +8,7 @@
     "optimize:resources": "node minify-resources.js",
     "analyze": "node analyze-performance.js",
     "compress": "node compress-assets.js",
-    "test:lighthouse": "lighthouse http://localhost:3000 --output json --output html --output-path ./reports/lighthouse",
+    "test:lighthouse": "lighthouse http://31.97.239.99 --output json --output html --output-path ./reports/lighthouse",
     "test:performance": "node test-performance.js"
   },
   "devDependencies": {

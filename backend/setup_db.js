@@ -254,7 +254,7 @@ async function setupDatabase() {
     
     console.log('\n🎉 Database setup completed successfully!');
     console.log('All tables created and sample data added.');
-    console.log('You can now use the admin panel at: http://31.97.239.99:3000/admin.html');
+    console.log('You can now use the admin panel at: http://31.97.239.99/admin.html');
     console.log('Admin Login: bubere908@gmail.com / @Arqum789');
     
   } catch (error) {

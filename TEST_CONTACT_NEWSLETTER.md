@@ -73,12 +73,12 @@ Test the admin endpoints:
 
 **View Newsletter Subscribers:**
 ```
-GET http://localhost:3000/admin/newsletter-subscribers
+GET http://31.97.239.99/admin/newsletter-subscribers
 ```
 
 **View Contact Submissions:**
 ```
-GET http://localhost:3000/admin/contact-submissions
+GET http://31.97.239.99/admin/contact-submissions
 ```
 
 ---

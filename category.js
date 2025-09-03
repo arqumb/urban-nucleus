@@ -1,5 +1,5 @@
 // API Base URL
-const API_BASE_URL = 'http://31.97.239.99:3000';
+const API_BASE_URL = 'http://31.97.239.99';
 
 // Global variables
 let currentCategory = null;

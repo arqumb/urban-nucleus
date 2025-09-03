@@ -114,7 +114,7 @@ Update all hardcoded localhost URLs in your frontend files:
 
 ```javascript
 // Change from:
-'http://localhost:3000/api/...'
+'http://31.97.239.99/api/...'
 
 // To:
 'https://urbannucleus.in/api/...'

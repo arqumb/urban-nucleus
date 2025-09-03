@@ -937,7 +937,7 @@
         // Announcement Bar Functions
         async function loadAnnouncementBarData() {
             try {
-                const response = await fetch('http://31.97.239.99:3000/api/announcement');
+                const response = await fetch('http://31.97.239.99/api/announcement');
                 if (response.ok) {
                     const data = await response.json();
                     if (data.visible && data.messages && data.messages.length > 0) {
@@ -1187,7 +1187,7 @@
         function loadCategories() {
             console.log('Loading categories...');
             
-            fetch('http://31.97.239.99:3000/categories')
+            fetch('http://31.97.239.99/categories')
                 .then(function(response) { return response.json(); })
                 .then(function(categories) {
                     console.log('Categories loaded:', categories);

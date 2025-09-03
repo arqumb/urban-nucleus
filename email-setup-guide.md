@@ -9,7 +9,7 @@ Your store will send beautiful, branded password reset emails from `urban.nucleu
 ## **📋 Prerequisites Checklist:**
 
 - [ ] Access to `urban.nucleus@gmail.com` Gmail account
-- [ ] Backend server running on `localhost:3000`
+- [ ] Backend server running on `31.97.239.99`
 - [ ] Frontend running on `localhost:5500`
 
 ---

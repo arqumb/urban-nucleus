@@ -2950,7 +2950,7 @@
         async function loadNewsletterSubscribers() {
             try {
                 console.log('📧 Loading newsletter subscribers...');
-                const response = await fetch('http://31.97.239.99:3000/admin/newsletter-subscribers');
+                const response = await fetch('http://31.97.239.99/admin/newsletter-subscribers');
                 
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
@@ -3053,7 +3053,7 @@
         // Export subscribers to CSV
         function exportSubscribers() {
             try {
-                fetch('http://31.97.239.99:3000/admin/newsletter-subscribers')
+                fetch('http://31.97.239.99/admin/newsletter-subscribers')
                     .then(response => response.json())
                     .then(subscribers => {
                         const csv = convertToCSV(subscribers, [
@@ -3073,7 +3073,7 @@
         async function loadContactForms() {
             try {
                 console.log('📞 Loading contact forms...');
-                const response = await fetch('http://31.97.239.99:3000/admin/contact-submissions');
+                const response = await fetch('http://31.97.239.99/admin/contact-submissions');
                 
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
@@ -3572,7 +3572,7 @@ urban.nucleus@gmail.com`;
             try {
                 console.log('📝 Updating contact status:', { contactId, newStatus });
                 
-                const response = await fetch(`http://31.97.239.99:3000/admin/contact-submissions/${contactId}/status`, {
+                const response = await fetch(`http://31.97.239.99/admin/contact-submissions/${contactId}/status`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json'
@@ -3627,7 +3627,7 @@ urban.nucleus@gmail.com`;
             try {
                 console.log('📧 Updating subscriber status:', { subscriberId, newStatus });
                 
-                const response = await fetch(`http://31.97.239.99:3000/admin/newsletter-subscribers/${subscriberId}/status`, {
+                const response = await fetch(`http://31.97.239.99/admin/newsletter-subscribers/${subscriberId}/status`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json'
@@ -3690,7 +3690,7 @@ urban.nucleus@gmail.com`;
             console.log('✅ Customer functions made global');
             
             // Test if we can reach the backend
-            fetch('http://31.97.239.99:3000/users')
+            fetch('http://31.97.239.99/users')
                 .then(response => {
                     console.log('🌐 Backend connectivity test:', response.status);
                     if (response.ok) {
@@ -3719,8 +3719,8 @@ urban.nucleus@gmail.com`;
                     console.log('📍 Loading indicator shown');
                 }
                 
-                console.log('🌐 Making fetch request to:', 'http://31.97.239.99:3000/users');
-                const response = await fetch('http://31.97.239.99:3000/users');
+                console.log('🌐 Making fetch request to:', 'http://31.97.239.99/users');
+                const response = await fetch('http://31.97.239.99/users');
                 console.log('📡 Response received:', response.status, response.ok);
                 
                 if (!response.ok) {
@@ -3862,7 +3862,7 @@ urban.nucleus@gmail.com`;
         // Load order statistics for a specific customer
         async function loadCustomerOrderStats(customerId) {
             try {
-                const response = await fetch(`http://31.97.239.99:3000/users/${customerId}/orders`);
+                const response = await fetch(`http://31.97.239.99/users/${customerId}/orders`);
                 if (response.ok) {
                     const orders = await response.json();
                     const totalOrders = orders.length;
@@ -3905,7 +3905,7 @@ urban.nucleus@gmail.com`;
             try {
                 showNotification('info', 'Loading...', 'Fetching customer details...');
                 
-                const response = await fetch(`http://31.97.239.99:3000/users/${customerId}`);
+                const response = await fetch(`http://31.97.239.99/users/${customerId}`);
                 if (!response.ok) {
                     throw new Error('Customer not found');
                 }
@@ -3914,7 +3914,7 @@ urban.nucleus@gmail.com`;
                 console.log('✅ Customer data loaded:', customer);
                 
                 // Get customer orders
-                const ordersResponse = await fetch(`http://31.97.239.99:3000/users/${customerId}/orders`);
+                const ordersResponse = await fetch(`http://31.97.239.99/users/${customerId}/orders`);
                 const orders = ordersResponse.ok ? await ordersResponse.json() : [];
                 console.log('✅ Customer orders loaded:', orders.length);
                 
@@ -4188,7 +4188,7 @@ urban.nucleus@gmail.com`;
         // Export contacts to CSV
         function exportContacts() {
             try {
-                fetch('http://31.97.239.99:3000/admin/contact-submissions')
+                fetch('http://31.97.239.99/admin/contact-submissions')
                     .then(response => response.json())
                     .then(contacts => {
                         const csv = convertToCSV(contacts, [

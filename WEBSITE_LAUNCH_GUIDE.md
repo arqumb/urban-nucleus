@@ -3,7 +3,7 @@
 ## 🎯 **YOUR WEBSITE IS READY TO LAUNCH!**
 
 ### ✅ **CURRENT STATUS:**
-- ✅ **Backend Server**: Running on http://localhost:3000
+- ✅ **Backend Server**: Running on http://31.97.239.99
 - ✅ **Payment Gateway**: Integrated with demo mode
 - ✅ **Database**: MySQL connected and configured
 - ✅ **All Features**: Complete e-commerce functionality
@@ -32,7 +32,7 @@
 ### **🌐 STEP 2: DOMAIN & HOSTING OPTIONS**
 
 #### **Option A: Local Testing (Current Setup)**
-- ✅ **Ready Now**: http://localhost:3000
+- ✅ **Ready Now**: http://31.97.239.99
 - ✅ **Perfect for**: Testing and development
 - ❌ **Limitation**: Only accessible on your computer
 
@@ -112,7 +112,7 @@
 ```bash
 # Your website is already running!
 # Share this link for testing:
-http://localhost:3000
+http://31.97.239.99
 
 # Keep server running:
 cd backend

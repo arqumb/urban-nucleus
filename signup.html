@@ -205,7 +205,7 @@
             // Show loading message
             showMessage('Authenticating with Google...', 'info');
             
-            fetch('http://31.97.239.99:3000/auth/google', {
+            fetch('http://31.97.239.99/auth/google', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -349,7 +349,7 @@
             submitBtn.disabled = true;
             
             try {
-                const response = await fetch('http://31.97.239.99:3000/auth/signup', {
+                const response = await fetch('http://31.97.239.99/auth/signup', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

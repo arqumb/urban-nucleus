@@ -11,7 +11,7 @@ This guide will help you set up Google and Facebook OAuth authentication for you
 
 ## 📋 Prerequisites
 
-- Node.js backend running on `localhost:3000`
+- Node.js backend running on `31.97.239.99`
 - Frontend running on `localhost:5500` (or your preferred port)
 - MySQL database with `users` table
 - Valid domain for production (localhost works for development)

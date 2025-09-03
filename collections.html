@@ -1494,7 +1494,7 @@
         // Announcement Bar Functions
         async function loadAnnouncementBarData() {
             try {
-                const response = await fetch('http://31.97.239.99:3000/api/announcement');
+                const response = await fetch('http://31.97.239.99/api/announcement');
                 if (response.ok) {
                     const data = await response.json();
                     if (data.visible && data.messages && data.messages.length > 0) {
@@ -1545,7 +1545,7 @@
         function loadCategoriesDropdown() {
             console.log('Loading categories...');
             
-            fetch('http://31.97.239.99:3000/categories')
+            fetch('http://31.97.239.99/categories')
                 .then(function(response) { 
                     if (!response.ok) {
                         throw new Error('Failed to fetch categories');
@@ -1692,7 +1692,7 @@
                 if (currentUser) {
                     const user = JSON.parse(currentUser);
                     // Try to get cart from database first
-                    fetch(`http://31.97.239.99:3000/cart/${user.id}`)
+                    fetch(`http://31.97.239.99/cart/${user.id}`)
                         .then(response => response.json())
                         .then(cartItems => {
                             const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
@@ -1870,7 +1870,7 @@
                 console.log('🔍 Performing search for:', query);
                 
                 try {
-                    const response = await fetch(`http://31.97.239.99:3000/products/search?q=${encodeURIComponent(query)}`);
+                    const response = await fetch(`http://31.97.239.99/products/search?q=${encodeURIComponent(query)}`);
                     if (!response.ok) {
                         throw new Error(`HTTP error! status: ${response.status}`);
                     }
